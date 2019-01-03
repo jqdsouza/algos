@@ -11,25 +11,17 @@ Assume the string has only uppercase and lowercaser letters (a-z)
 import unittest
 
 def string_compression(string):
-	d = {}	
-	ans = ""
+	count = 0
+	ans = []
+	for i in range(len(string)):
+		if i != 0 and string[i] != string[i-1]:
+			ans.append(string[i-1] + str(count))
+			count = 0
+		count+=1
+		
+	ans.append(string[-1] + str(count))
 
-	for el in string:
-		if el in d:
-			d[el] += 1
-		else:
-			d[el] = 1
-
-	for key, val in d.items():
-		temp = "{0}".format(key) + "{0}".format(val)
-		ans += temp
-
-	if len(ans) > len(string):
-		return string
-
-	else:
-		return ans
-
+	return min(string, ''.join(ans), key = len)
 
 class Test(unittest.TestCase):
     data = [
